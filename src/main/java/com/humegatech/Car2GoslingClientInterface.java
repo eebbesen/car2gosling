@@ -14,4 +14,8 @@ public interface Car2GoslingClientInterface {
     public ArrayList getGasStations(final String location);
 
     public ArrayList getOperationAreas(final String location);
+
+    public ArrayList getParkingSpots(final String location);
+
+    public ArrayList getVehicles(final String location);
 }

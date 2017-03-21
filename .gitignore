@@ -9,3 +9,5 @@
 hs_err_pid*
 
 target
+!versions/*.jar
+
