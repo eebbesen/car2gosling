@@ -23,13 +23,53 @@ public class Car2GoslingClientImpl implements Car2GoslingClientInterface {
 
     @Override
     public ArrayList getLocations() {
-        final WebTarget target = getTarget().path("locations").queryParam("oauth_consumer_key", car2GoConsumerKey)
-                .queryParam("format", "json");
+        final WebTarget target = buildWebTarget("locations", null);
+        final Map operationAreas = executeGet(target);
+        return (ArrayList) operationAreas.get("location");
+    }
 
-        final Invocation.Builder invocationBuilder = target.request();
+    @Override
+    public ArrayList getGasStations(final String location) {
+        final WebTarget target = buildWebTarget("gasstations", location);
+        final Map operationAreas = executeGet(target);
+        return (ArrayList) operationAreas.get("placemarks");
+    }
+
+    @Override
+    public ArrayList getOperationAreas(final String location) {
+        final WebTarget target = buildWebTarget("operationareas", location);
+        final Map operationAreas = executeGet(target);
+        return (ArrayList) operationAreas.get("placemarks");
+    }
+
+    @Override
+    public ArrayList getParkingSpots(final String location) {
+        final WebTarget target = buildWebTarget("parkingspots", location);
+        final Map parkingSpots = executeGet(target);
+        return (ArrayList) parkingSpots.get("placemarks");
+    }
+
+    @Override
+    public ArrayList getVehicles(final String location) {
+        final WebTarget target = buildWebTarget("vehicles", location);
+        final Map vehicles = executeGet(target);
+        return (ArrayList) vehicles.get("placemarks");
+    }
+
+    private WebTarget buildWebTarget(final String endpoint, final String location) {
+        final WebTarget target = getTarget().path(endpoint).queryParam("oauth_consumer_key", car2GoConsumerKey).queryParam("format",
+                "json");
+        if (location != null) {
+            return target.queryParam("loc", location);
+        }
+
+        return target;
+    }
+
+    private Map executeGet(final WebTarget webTarget) {
+        final Invocation.Builder invocationBuilder = webTarget.request();
         final Response response = invocationBuilder.get();
-        final Map locs = (Map) response.readEntity(Object.class);
-        return (ArrayList) locs.get("location");
+        return (Map) response.readEntity(Object.class);
     }
 
     private WebTarget getTarget() {
@@ -37,5 +77,4 @@ public class Car2GoslingClientImpl implements Car2GoslingClientInterface {
         // using JacksonFeature for easier payload handling
         return client.target(car2GoApiUrl).register(JacksonFeature.class);
     }
-
 }
