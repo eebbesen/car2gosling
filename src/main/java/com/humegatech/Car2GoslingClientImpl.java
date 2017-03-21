@@ -16,7 +16,7 @@ public class Car2GoslingClientImpl implements Car2GoslingClientInterface {
     private final String car2GoConsumerKey;
     private final String car2GoApiUrl;
 
-    Car2GoslingClientImpl(final String car2GoConsumerKey) {
+    public Car2GoslingClientImpl(final String car2GoConsumerKey) {
         this.car2GoConsumerKey = car2GoConsumerKey;
         this.car2GoApiUrl = DEFAULT_CAR2GO_API_URL;
     }
