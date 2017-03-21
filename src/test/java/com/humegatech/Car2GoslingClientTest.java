@@ -22,4 +22,24 @@ public class Car2GoslingClientTest {
         final LinkedHashMap location = (LinkedHashMap) locations.get(0);
         assertTrue("Didn't respond to countryCode", location.get("countryCode").toString().length() > 0);
     }
+
+    @Test
+    public void testGetGasStations() {
+        final Car2GoslingClientImpl client = new Car2GoslingClientImpl(System.getProperty("CAR2GO_CONSUMER_KEY"));
+        final ArrayList gasStations = client.getGasStations("Hamburg");
+
+        assertTrue("Didn't get any gas stations", gasStations.size() > 0);
+        final LinkedHashMap gasStation = (LinkedHashMap) gasStations.get(0);
+        assertTrue("Didn't respond to coordinates", gasStation.get("coordinates").toString().length() > 0);
+    }
+
+    @Test
+    public void testGetOperationAreas() {
+        final Car2GoslingClientImpl client = new Car2GoslingClientImpl(System.getProperty("CAR2GO_CONSUMER_KEY"));
+        final ArrayList operationAreas = client.getOperationAreas("Hamburg");
+
+        assertTrue("Didn't get any operation areas", operationAreas.size() > 0);
+        final LinkedHashMap operationArea = (LinkedHashMap) operationAreas.get(0);
+        assertTrue("Didn't respond to coordinates", operationArea.get("coordinates").toString().length() > 0);
+    }
 }
