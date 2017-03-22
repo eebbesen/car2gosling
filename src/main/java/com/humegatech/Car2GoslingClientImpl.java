@@ -1,15 +1,14 @@
 package com.humegatech;
 
-import java.util.ArrayList;
-import java.util.Map;
-
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Invocation;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import org.glassfish.jersey.jackson.JacksonFeature;
+import org.codehaus.jettison.json.JSONException;
+import org.codehaus.jettison.json.JSONObject;
 
 public class Car2GoslingClientImpl implements Car2GoslingClientInterface {
     private static final String DEFAULT_CAR2GO_API_URL = "https://www.car2go.com/api/v2.1/";
@@ -22,38 +21,50 @@ public class Car2GoslingClientImpl implements Car2GoslingClientInterface {
     }
 
     @Override
-    public ArrayList getLocations() {
+    public String getLocations() {
         final WebTarget target = buildWebTarget("locations", null);
-        final Map operationAreas = executeGet(target);
-        return (ArrayList) operationAreas.get("location");
+        final JSONObject locations = executeGet(target);
+        return getValues(locations, "location");
     }
 
     @Override
-    public ArrayList getGasStations(final String location) {
+    public String getGasStations(final String location) {
         final WebTarget target = buildWebTarget("gasstations", location);
-        final Map operationAreas = executeGet(target);
-        return (ArrayList) operationAreas.get("placemarks");
+        final JSONObject gasStations = executeGet(target);
+        return getValues(gasStations, "placemarks");
     }
 
     @Override
-    public ArrayList getOperationAreas(final String location) {
+    public String getOperationAreas(final String location) {
         final WebTarget target = buildWebTarget("operationareas", location);
-        final Map operationAreas = executeGet(target);
-        return (ArrayList) operationAreas.get("placemarks");
+        final JSONObject operationAreas = executeGet(target);
+        return getValues(operationAreas, "placemarks");
     }
 
     @Override
-    public ArrayList getParkingSpots(final String location) {
+    public String getParkingSpots(final String location) {
         final WebTarget target = buildWebTarget("parkingspots", location);
-        final Map parkingSpots = executeGet(target);
-        return (ArrayList) parkingSpots.get("placemarks");
+        final JSONObject parkingSpots = executeGet(target);
+        return getValues(parkingSpots, "placemarks");
     }
 
     @Override
-    public ArrayList getVehicles(final String location) {
+    public String getVehicles(final String location) {
         final WebTarget target = buildWebTarget("vehicles", location);
-        final Map vehicles = executeGet(target);
-        return (ArrayList) vehicles.get("placemarks");
+        final JSONObject vehicles = executeGet(target);
+        return getValues(vehicles, "placemarks");
+    }
+
+    private String getValues(final JSONObject payload, final String key) {
+        String ret = "";
+        try {
+            ret = payload.get(key).toString();
+        } catch (final JSONException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        return ret;
     }
 
     private WebTarget buildWebTarget(final String endpoint, final String location) {
@@ -66,15 +77,23 @@ public class Car2GoslingClientImpl implements Car2GoslingClientInterface {
         return target;
     }
 
-    private Map executeGet(final WebTarget webTarget) {
-        final Invocation.Builder invocationBuilder = webTarget.request();
+    private JSONObject executeGet(final WebTarget webTarget) {
+        final Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
         final Response response = invocationBuilder.get();
-        return (Map) response.readEntity(Object.class);
+        // return response.readEntity(String.class);
+        final String jsonString = response.readEntity(String.class);
+        try {
+            return new JSONObject(jsonString);
+        } catch (final JSONException e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
     }
 
     private WebTarget getTarget() {
         final Client client = ClientBuilder.newClient();
         // using JacksonFeature for easier payload handling
-        return client.target(car2GoApiUrl).register(JacksonFeature.class);
+        // return client.target(car2GoApiUrl).register(JacksonFeature.class);
+        return client.target(car2GoApiUrl);
     }
 }
