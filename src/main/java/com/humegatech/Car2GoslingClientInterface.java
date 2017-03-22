@@ -1,9 +1,7 @@
 package com.humegatech;
 
-import java.util.ArrayList;
-
 public interface Car2GoslingClientInterface {
-    public ArrayList getLocations();
+    public String getLocations();
 
     /**
      * Not all locations have gas stations
@@ -11,11 +9,11 @@ public interface Car2GoslingClientInterface {
      * @param location
      * @return Gas Station information for a given location
      */
-    public ArrayList getGasStations(final String location);
+    public String getGasStations(final String location);
 
-    public ArrayList getOperationAreas(final String location);
+    public String getOperationAreas(final String location);
 
-    public ArrayList getParkingSpots(final String location);
+    public String getParkingSpots(final String location);
 
-    public ArrayList getVehicles(final String location);
+    public String getVehicles(final String location);
 }
