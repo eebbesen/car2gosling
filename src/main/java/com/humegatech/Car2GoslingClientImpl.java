@@ -80,7 +80,6 @@ public class Car2GoslingClientImpl implements Car2GoslingClientInterface {
     private JSONObject executeGet(final WebTarget webTarget) {
         final Invocation.Builder invocationBuilder = webTarget.request(MediaType.APPLICATION_JSON);
         final Response response = invocationBuilder.get();
-        // return response.readEntity(String.class);
         final String jsonString = response.readEntity(String.class);
         try {
             return new JSONObject(jsonString);
@@ -92,8 +91,6 @@ public class Car2GoslingClientImpl implements Car2GoslingClientInterface {
 
     private WebTarget getTarget() {
         final Client client = ClientBuilder.newClient();
-        // using JacksonFeature for easier payload handling
-        // return client.target(car2GoApiUrl).register(JacksonFeature.class);
         return client.target(car2GoApiUrl);
     }
 }
