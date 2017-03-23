@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class Car2GoslingClientTest {
     /**
-     * This really calls the Car2Go API so it is a functional test,
+     * Functional test suite: really calls the Car2Go API!
      *
      * When running via Maven, initialize with -DCAR2GO_CONSUMER_KEY=
      * <your_key> e.g. <code>mvn test -DCAR2GO_CONSUMER_KEY=mysecretkey</code>
