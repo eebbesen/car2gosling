@@ -11,6 +11,10 @@
   <description>Car2Go API v2.1 client in Java</description>
   <url>https://github.com/eebbesen/car2gosling</url>
 
+  <scm>
+    <url>git@github.com:eebbesen/car2gosling.git</url>
+  </scm>
+
   <licenses>
     <license>
       <name>MIT License</name>
