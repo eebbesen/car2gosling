@@ -6,7 +6,7 @@
   <groupId>com.humegatech</groupId>
   <artifactId>car2gosling</artifactId>
   <packaging>jar</packaging>
-  <version>1.1.2-SNAPSHOT</version>
+  <version>1.1.2</version>
   <name>car2gosling</name>
 
   <dependencyManagement>

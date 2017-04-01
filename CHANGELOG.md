@@ -1,5 +1,15 @@
 # Car2Gosling Release Notes
 # --------------------------------------------------------------------
+# Date: 04-01-2017
+# Version:
+1.1.2
+# Supported API versions:
+Car2Go API v2.1 
+
+# New Features and Functionality
+* 1.1.2 release
+
+
 # Date: 03-22-2017
 # Version:
 1.1.2-SNAPSHOT
