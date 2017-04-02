@@ -6,7 +6,7 @@
   <groupId>com.humegatech</groupId>
   <artifactId>car2gosling</artifactId>
   <packaging>jar</packaging>
-  <version>1.1.2</version>
+  <version>1.2-SNAPSHOT</version>
   <name>car2gosling</name>
   <description>Car2Go API v2.1 client in Java</description>
   <url>https://github.com/eebbesen/car2gosling</url>
@@ -45,9 +45,11 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.glassfish.jersey.containers</groupId>
-      <artifactId>jersey-container-grizzly2-http</artifactId>
+      <groupId>org.glassfish.jersey.core</groupId>
+      <artifactId>jersey-common</artifactId>
+      <version>2.11</version>
     </dependency>
+
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
